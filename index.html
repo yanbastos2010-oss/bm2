@@ -16,11 +16,19 @@
     
     <script>
       window.pixelId = "69ffbd08c858cc8800550990";
-      var a = document.createElement("script");
-      a.setAttribute("async", "");
-      a.setAttribute("defer", "");
-      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-      document.head.appendChild(a);
+      // Prevent double PageView fires caused by startup URL rewriting (pushState/replaceState) of latest.js UTM cleaner
+      window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          if (!window.utmifyPixelLoaded) {
+            window.utmifyPixelLoaded = true;
+            var a = document.createElement("script");
+            a.setAttribute("async", "");
+            a.setAttribute("defer", "");
+            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+            document.head.appendChild(a);
+          }
+        }, 1200);
+      });
     </script>
     <script
       src="https://cdn.utmify.com.br/scripts/utms/latest.js"
